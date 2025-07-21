@@ -1,0 +1,137 @@
+# 🖊️ Collaborative Whiteboard App
+
+A real-time collaborative whiteboard built with the **MERN stack** (MongoDB, Express.js, React, Node.js) and **Socket.io**, where users can draw together in shared rooms.
+
+---
+
+## 🚀 Features
+
+- 🎨 Real-time drawing using socket communication  
+- 🧑‍🤝‍🧑 Multiple users in the same room  
+- 🖌️ Choose brush color and stroke width  
+- 🧹 Clear canvas functionality  
+- 💾 Drawing history persisted using MongoDB  
+- 🔄 Automatically loads previous drawings when someone joins the room  
+- 👥 Displays number of connected users in a room  
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend:**  
+- React.js  
+- Vite  
+- HTML/CSS/JavaScript  
+- Socket.io-client  
+
+**Backend:**  
+- Node.js  
+- Express.js  
+- Socket.io  
+- MongoDB + Mongoose  
+
+---
+
+## 📂 Project Structure
+
+Collaborative-Whiteboard/
+│
+├── models/ # Mongoose schemas (Room.js)
+├── socket/ # Socket event handling (index.js)
+├── frontend/ # React frontend (via Vite)
+│ ├── components/
+│ ├── pages/
+│ └── main.jsx
+├── server.js # Express + Socket.io server
+├── .env # MongoDB URI and environment variables
+├── package.json
+└── README.md # This file
+
+yaml
+Copy
+Edit
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/collaborative-whiteboard.git
+cd collaborative-whiteboard
+2️⃣ Backend Setup
+bash
+Copy
+Edit
+npm install
+Create a .env file:
+
+bash
+Copy
+Edit
+touch .env
+Add the following to .env:
+
+ini
+Copy
+Edit
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+Start the backend:
+
+bash
+Copy
+Edit
+npm run server
+# or
+node server.js
+3️⃣ Frontend Setup
+bash
+Copy
+Edit
+cd frontend
+npm install
+npm run dev
+Visit http://localhost:5173 in your browser.
+
+🔍 How It Works
+When a user visits the whiteboard, a new room is generated.
+
+Socket.io handles real-time communication between all users in the room.
+
+Drawing data is saved in MongoDB under that room's ID.
+
+If another user joins the same room later, the previous drawing history is loaded from MongoDB.
+
+💾 MongoDB Schema
+📄 Room.js
+js
+Copy
+Edit
+const mongoose = require('mongoose');
+
+const RoomSchema = new mongoose.Schema({
+  roomId: { type: String, required: true, unique: true },
+  drawingData: { type: Array, default: [] },
+  lastActivity: { type: Date, default: Date.now },
+});
+
+module.exports = mongoose.model('Room', RoomSchema);
+✏️ Drawing Command Format
+js
+Copy
+Edit
+{
+  type: 'draw',
+  data: {
+    x0, y0, x1, y1,
+    color,
+    stroke
+  },
+  timestamp: Date
+}
+
+
+
+
